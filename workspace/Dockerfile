@@ -129,6 +129,30 @@ RUN echo "" >> ~/.bashrc && \
 	  echo "" >> ~/.bashrc
 
 ###########################################################################
+# Autocomplete
+###########################################################################
+
+USER root
+
+COPY ./autocomplete.sh /root/autocomplete.sh
+COPY ./autocomplete.sh /home/laradock/autocomplete.sh
+
+RUN sed -i 's/\r//' /root/autocomplete.sh && \
+    sed -i 's/\r//' /home/laradock/autocomplete.sh && \
+    chown laradock:laradock /home/laradock/autocomplete.sh && \
+    echo "" >> ~/.bashrc && \
+    echo "# Load Autocompletion" >> ~/.bashrc && \
+    echo "source ~/autocomplete.sh" >> ~/.bashrc && \
+    echo "" >> ~/.bashrc
+    
+USER laradock
+
+RUN echo "" >> ~/.bashrc && \
+    echo "# Load Autocompletion" >> ~/.bashrc && \
+    echo "source ~/autocomplete.sh" >> ~/.bashrc && \
+	  echo "" >> ~/.bashrc
+
+###########################################################################
 # Composer:
 ###########################################################################
 
